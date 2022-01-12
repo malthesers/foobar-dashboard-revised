@@ -33,7 +33,10 @@ function getData() {
       showTotalOrders(data.queue);
       showOrderNumbers(data.queue, data.serving);
       showInventory(data.storage);
-      showSales(data.queue);
+      showSales(
+        data.queue,
+        data.taps.map((tap) => tap.beer)
+      );
 
       //Recall functin after 1s
       setTimeout(getData, 1000);
@@ -420,9 +423,25 @@ const orderCounter = [
 
 let latestOrder = 0;
 
-function showSales(queue) {
+function showSales(queue, taps) {
   const container = document.querySelector(".sales-articles");
   container.innerHTML = " ";
+
+  //Create new array for the servable beers
+  let beerLabels = [];
+
+  taps.map((tap) => {
+    //Replace excluded beers
+    const beer = replaceBeer(tap);
+
+    //Add beer to array only if it does not already contain it
+    if (beerLabels.includes(beer) === false) {
+      beerLabels.push(beer);
+    }
+  });
+
+  //Sort beers alphabetically
+  beerLabels.sort();
 
   //Iterate through each order
   queue.forEach((currentOrder) => {
@@ -445,14 +464,16 @@ function showSales(queue) {
     }
   });
 
-  // orderCounter.forEach(beer=>{
-  //   const kegClone = document.querySelector("#template-sales").cloneNode(true).content;
+  const beerData = [];
 
-  //   kegClone.querySelector(".sales-name").textContent = beer.name;
-  //   kegClone.querySelector(".sales-amount").textContent = beer.amount;
+  orderCounter.forEach((order) => {
+    if (beerLabels.includes(order.name)) {
+      console.log(order.amount);
+      beerData.push(order.amount);
+    }
+  });
 
-  //   container.appendChild(kegClone);
-  // })
+  console.log(orderCounter);
 
   //Empty canvas container
   document.querySelector("#sales-chart-container").innerHTML = " ";
@@ -464,21 +485,12 @@ function showSales(queue) {
   salesChart.height = "auto";
   document.querySelector("#sales-chart-container").appendChild(salesChart);
 
-  const labels = ["El Hefe", "Fairy Tale Ale", "GitHop", "Hollaback Lager", "Hoppily Ever After", "Mowintime", "Sleighride"];
   const data = {
-    labels: labels,
+    labels: beerLabels,
     datasets: [
       {
         label: "Todays sale",
-        data: [
-          orderCounter[0].amount,
-          orderCounter[1].amount,
-          orderCounter[2].amount,
-          orderCounter[3].amount,
-          orderCounter[4].amount,
-          orderCounter[5].amount,
-          orderCounter[6].amount,
-        ],
+        data: beerData,
         backgroundColor: ["#70AF70"],
         borderColor: ["#70AF70"],
         borderWidth: 1,
