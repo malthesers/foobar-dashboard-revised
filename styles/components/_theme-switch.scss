@@ -1,0 +1,60 @@
+@use "../abstracts/variables" as *;
+
+.theme-switch-container {
+  display: inline-block;
+  height: 3rem;
+
+  .theme-switch {
+    position: relative;
+    display: inline-block;
+    height: 3rem;
+    width: 6rem;
+
+    input {
+      display: none;
+
+      &:checked + .theme-slider::before {
+        transform: translateX(100%);
+      }
+    }
+
+    .theme-slider {
+      position: absolute;
+      background-color: $primary-dark;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 3rem;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      svg {
+        z-index: 1;
+        place-self: center;
+        fill: $icon-color;
+
+        * {
+          fill: inherit;
+        }
+
+        line {
+          stroke: $icon-color;
+        }
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        background-color: $primary-light;
+        top: 0;
+        left: 0;
+        height: 3rem;
+        width: 3rem;
+        border-radius: 3rem;
+        transition-duration: 0.3s;
+      }
+    }
+  }
+}

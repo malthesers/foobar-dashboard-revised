@@ -1,0 +1,268 @@
+@use "../abstracts/variables" as *;
+
+.data-block {
+  background-color: $primary-dark;
+  border-radius: 1rem;
+  padding: 1rem;
+
+  h2 {
+    text-align: left;
+    margin-top: 0;
+    margin-left: 0.3rem;
+    font-size: 1rem;
+  }
+
+  &#data-total-orders {
+    display: flex;
+    flex-flow: column;
+
+    .total-orders-container {
+      display: grid;
+      justify-self: center;
+      flex-grow: 1;
+
+      .total-orders {
+        font-size: 4rem;
+        font-weight: 100;
+        text-align: center;
+        place-self: center;
+      }
+    }
+  }
+
+  // .data-box-storage {
+
+  // }
+
+  .keg-remaining {
+    margin: 0;
+  }
+  .keg-name {
+    margin-top: 1rem;
+    margin-bottom: 0rem;
+  }
+
+  &.data-box {
+    &#data-inventory {
+      display: flex;
+      flex-flow: column;
+      height: 24rem;
+
+      #inventory-chart-container {
+        display: flex;
+        flex-grow: 1;
+      }
+    }
+
+    &#data-sales {
+      display: flex;
+      flex-flow: column;
+      height: 24rem;
+
+      #sales-chart-container {
+        display: flex;
+        flex-grow: 1;
+      }
+    }
+
+    .inventory-articles,
+    .sales-articles {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+    }
+
+    .storage-articles {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 1rem;
+
+      .keg-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1rem;
+        border-radius: 1rem;
+
+        .keg-image-container {
+          position: relative;
+          display: grid;
+
+          .keg-image-shadow {
+            position: absolute;
+            width: 4rem;
+            height: 80%;
+            place-self: center;
+            border-radius: 0.2rem;
+            opacity: 0.5;
+          }
+
+          .shadow-low {
+            box-shadow: 0px 0px 11px 11px $low-color;
+          }
+
+          .shadow-middle {
+            box-shadow: 0px 0px 11px 11px $middle-color;
+          }
+
+          .shadow-high {
+            box-shadow: 0px 0px 11px 11px $high-color;
+          }
+
+          img {
+            width: 6rem;
+            place-self: center;
+            z-index: 1;
+          }
+        }
+
+        .keg-info {
+          text-align: center;
+        }
+      }
+    }
+
+    @media (min-width: 750px) {
+      &#data-bartenders {
+        .bartenders-container {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          grid-gap: 1rem;
+
+          article {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            grid-gap: 1rem;
+
+            border-radius: 1rem;
+            padding-bottom: 1rem;
+          }
+        }
+      }
+
+      &.data-box {
+        &#data-inventory {
+          height: 100%;
+        }
+      }
+
+      &#data-sales {
+        display: flex;
+        flex-flow: column;
+        height: 100%;
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .storage-articles {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      &#data-bartenders {
+        .bartenders-container {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          grid-gap: 1rem;
+
+          article {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            grid-gap: 1rem;
+            padding: 1rem;
+            border-radius: 1rem;
+            padding-bottom: 0;
+          }
+        }
+      }
+    }
+
+    &#data-bartenders {
+      .bartenders-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 1rem;
+
+        article {
+          display: grid;
+          grid-template-columns: 2fr 3fr;
+          grid-gap: 1rem;
+          border-radius: 1rem;
+          padding-bottom: 0;
+
+          .bartender-image-container {
+            position: relative;
+
+            img {
+              display: block;
+              min-width: 4rem;
+            }
+
+            .bartender-status-dot {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 1rem;
+              height: 1rem;
+              border-radius: 2rem;
+              background-color: $low-color;
+            }
+
+            .dot-ready {
+              background-color: $high-color;
+            }
+
+            .dot-working {
+              background-color: $middle-color;
+            }
+          }
+
+          .bartender-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            > * {
+              font-size: 1rem;
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &#data-orders-queue {
+    text-align: center;
+    display: grid;
+
+    h2 {
+      text-align: center;
+      margin: 0rem;
+    }
+
+    > * {
+      display: flex;
+      flex-flow: column;
+
+      div {
+        display: grid;
+        flex-grow: 1;
+        place-content: center;
+      }
+    }
+
+    .in-queue-number,
+    .being-served-number {
+      font-size: 4rem;
+      font-weight: 100;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    @media (min-width: 1000px) {
+      .in-queue-number,
+      .being-served-number {
+        margin: 0;
+      }
+    }
+  }
+}
